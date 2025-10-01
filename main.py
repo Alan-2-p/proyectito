@@ -1,5 +1,6 @@
 import requests
 from flask import Flask, jsonify, request
+import random
 
 def fyh():
     url1 = "https://timeapi.io/api/time/current/zone?timeZone=America%2FGuatemala"
@@ -12,20 +13,39 @@ def fyh():
         if x1 == 5:
             break
 
-lat = 14.63
-lon = -90.55
+def cyt():
+    lat = 14.63
+    lon = -90.55
 
-url2 = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
+    url2 = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (compatible; Python script)",
-    "Accept": "application/json"
-}
-data2 = requests.get(url2, headers=headers).json()
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; Python script)",
+        "Accept": "application/json"
+    }
+    data2 = requests.get(url2, headers=headers).json()
 
-x2 = 0
-for i in data2:
-    print(i, end=": ")
-    print(data2[i])
-    x2 = x2 + 1
+    x2 = 0
+    for i in data2:
+        if type(data2[i]) == dict:
+            print("Guardian Tales")
+            for j in data2[i]:
+                if (j in ["temperature", "windspeed"]):
+                    print(f"{j}: {data2[i][j]}")
+
+
+random_id = random.randint(1, 1025)
+
+# Consulta la API
+url3 = f"https://pokeapi.co/api/v2/pokemon/{random_id}"
+data3 = requests.get(url3).json()
+
+print(f"Nombre: {data3['name'].title()}")
+print(f"ID: {data3['id']}")
+print(f"Altura: {data3['height']}")
+print(f"Peso: {data3['weight']}")
+print(f"Generacion: {data3['gen']}")
+print("Tipos:")
+for tipo in data3['types']:
+    print(f" - {tipo['type']['name'].title()}")
 
