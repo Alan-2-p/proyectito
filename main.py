@@ -39,13 +39,20 @@ random_id = random.randint(1, 1025)
 # Consulta la API
 url3 = f"https://pokeapi.co/api/v2/pokemon/{random_id}"
 data3 = requests.get(url3).json()
+url4 = f"https://pokeapi.co/api/v2/pokemon-species/{random_id}"
+data4 = requests.get(url4).json()
 
-print(f"Nombre: {data3['name'].title()}")
+print(f"Nombre: {data3['name']}")
 print(f"ID: {data3['id']}")
 print(f"Altura: {data3['height']}")
 print(f"Peso: {data3['weight']}")
-print(f"Generacion: {data3['gen']}")
 print("Tipos:")
-for tipo in data3['types']:
-    print(f" - {tipo['type']['name'].title()}")
+for i in data3['types']:
+    print(f" - {i['type']['name']}")
+print(f"Generación: {data4['generation']['name'].upper()}")
 
+for i in data4['flavor_text_entries']:
+    if i['language']['name'] == 'es':
+        des = i['flavor_text']
+        break
+print(f"Descripción: {des}")
