@@ -3,9 +3,7 @@ from flask import Flask, jsonify, request
 import random
 import customtkinter
 from customtkinter import *
-from tkinter import messagebox, mainloop
 
-from websockets import connect
 
 
 def fyh():
@@ -49,43 +47,76 @@ def cyt():
                     ll2.append(data2[i][j])
     for i in ll2:
         print(i)
-    l3=CTkLabel(app,text=f"{ll2[0]}")
-    l4 = CTkLabel(app, text=f"{ll2[0]}")
-    l5 = CTkLabel(app, text=f"{ll2[0]}")
-    l6 = CTkLabel(app, text=f"{ll2[0]}")
+    l3=CTkLabel(app,text=f"{ll2[0]}: ")
+    l4 = CTkLabel(app, text=f"{ll2[2]}: ")
+    l5 = CTkLabel(app, text=f"{ll2[5]} {ll2[1]}")
+    l6 = CTkLabel(app, text=f"{ll2[7]} {ll2[3]}")
 
     l3.grid(column=0, row=5, padx=50, pady=0)
+    l4.grid(column=0, row=6, padx=50, pady=0)
+    l5.grid(column=1, row=5, padx=50, pady=0)
+    l6.grid(column=1, row=6, padx=50, pady=0)
 
 
 
 
 def puchamones():
-    random_id = random.randint(1, 1025)
+    
+    def mp():
+        random_id = random.randint(1, 1025)
 
-    # Consulta la API
-    url3 = f"https://pokeapi.co/api/v2/pokemon/{random_id}"
-    data3 = requests.get(url3).json()
-    url4 = f"https://pokeapi.co/api/v2/pokemon-species/{random_id}"
-    data4 = requests.get(url4).json()
+        url3 = f"https://pokeapi.co/api/v2/pokemon/{random_id}"
+        data3 = requests.get(url3).json()
+        url4 = f"https://pokeapi.co/api/v2/pokemon-species/{random_id}"
+        data4 = requests.get(url4).json()
+        ppp=CTkToplevel()
+        ppp.geometry("470x300")
+        ppp.attributes("-topmost",True)
+        ppp.title("Pokemon")
+        ll3=[]
+        x4= 6
+        l7 = CTkLabel(ppp, text=f"Nombre: {data3['name']}")
+        l8 = CTkLabel(ppp, text=f"ID: {data3['id']}")
+        l9 = CTkLabel(ppp, text=f"Altura: {data3['height']}")
+        l10 = CTkLabel(ppp, text=f"Peso: {data3['weight']}")
+        l11 = CTkLabel(ppp, text="Tipos:")
+        for i in data3['types']:
+            ll3.append(i["type"]["name"])
+        
+        for i in ll3:
+            l12 = CTkLabel(ppp, text=f" - {i}")
+            l12.grid(column=0, row=x4, padx=50, pady=0)
+            x4 = x4 + 1
+        l13 = CTkLabel(ppp, text=f"Generación: {data4['generation']['name'].upper()}")
 
-    print(f"Nombre: {data3['name']}")
-    print(f"ID: {data3['id']}")
-    print(f"Altura: {data3['height']}")
-    print(f"Peso: {data3['weight']}")
-    print("Tipos:")
-    for i in data3['types']:
-        print(f" - {i['type']['name']}")
-    print(f"Generación: {data4['generation']['name'].upper()}")
+        for i in data4['flavor_text_entries']:
+            if i['language']['name'] == 'es':
+                des = i['flavor_text']
+                break
+        l14 = CTkLabel(ppp, text=f"Descripción: {des}")
+        #algunas veces falla la varible des, no se porque
+        
+        l7.grid(column=0, row=1, padx=50, pady=0)
+        l8.grid(column=0, row=2, padx=50, pady=0)
+        l9.grid(column=0, row=3, padx=50, pady=0)
+        l10.grid(column=0, row=4, padx=50, pady=0)
+        l11.grid(column=0, row=5, padx=50, pady=0)
+        l13.grid(column=0, row=8, padx=50, pady=0)
+        l14.grid(column=0, row=9, padx=50, pady=0)
+        
+        
+    
 
-    for i in data4['flavor_text_entries']:
-        if i['language']['name'] == 'es':
-            des = i['flavor_text']
-            break
-    print(f"Descripción: {des}")
+    bt1=CTkButton(app, command=mp, text="Pokemon")
+
+    
+    bt1.grid(column=0, row=7,columnspan=2 ,padx=50, pady=0)
+    
+    
 
 app = CTk()
 app.title("APIs")
-app.geometry("300x300")
+app.geometry("350x300")
 app.resizable(width=True,height=True)
 
 fyh()
