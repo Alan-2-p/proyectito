@@ -24,42 +24,6 @@ def fyh():
         if x1 == 5:
             break
 
-def cyt():
-    lat = 14.63
-    lon = -90.55
-
-    url2 = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
-
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; Python script)",
-        "Accept": "application/json"
-    }
-    data2 = requests.get(url2, headers=headers).json()
-
-    ll2=[]
-    for i in data2:
-        if type(data2[i]) == dict:
-            print("Guardian Tales")
-            for j in data2[i]:
-                if (j in ["temperature", "windspeed"]):
-                    print(f"{j}: {data2[i][j]}")
-                    ll2.append(j)
-                    ll2.append(data2[i][j])
-    for i in ll2:
-        print(i)
-    l3=CTkLabel(app,text=f"{ll2[0]}: ")
-    l4 = CTkLabel(app, text=f"{ll2[2]}: ")
-    l5 = CTkLabel(app, text=f"{ll2[5]} {ll2[1]}")
-    l6 = CTkLabel(app, text=f"{ll2[7]} {ll2[3]}")
-
-    l3.grid(column=0, row=5, padx=50, pady=0)
-    l4.grid(column=0, row=6, padx=50, pady=0)
-    l5.grid(column=1, row=5, padx=50, pady=0)
-    l6.grid(column=1, row=6, padx=50, pady=0)
-
-
-
-
 def puchamones():
     
     def mp():
@@ -104,23 +68,18 @@ def puchamones():
         l13.grid(column=0, row=8, padx=50, pady=0)
         l14.grid(column=0, row=9, padx=50, pady=0)
         
-        
-    
-
     bt1=CTkButton(app, command=mp, text="Pokemon")
 
-    
     bt1.grid(column=0, row=7,columnspan=2 ,padx=50, pady=0)
     
     
 
 app = CTk()
-app.title("APIs")
+app.title("Consumo de APIs")
 app.geometry("350x300")
 app.resizable(width=True,height=True)
 
 fyh()
-cyt()
 puchamones()
 
 
